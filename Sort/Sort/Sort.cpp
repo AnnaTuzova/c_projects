@@ -6,6 +6,7 @@
 #include <algorithm>
 
 const int kNumOfElementsGlobal = 100;
+
 const char* kPath = "file.txt";
 void FillingFile(const int kNumOfElements = kNumOfElementsGlobal);
 void ReadingFile(int *data, const int kNumOfElements = kNumOfElementsGlobal);
@@ -114,14 +115,14 @@ void WritingFile(int *sorted_data, const int kNumOfElements)
 	file.close();
 }
 
-void CheckSort(int *test_array, int *test_sorted_data, const int kNumOfElements)
+void CheckSort(int *expected_array, int *actual_array, const int kNumOfElements)
 {
 	int *check = new int[kNumOfElements];
 	int check_sum = 0;
 	
 	for (int i = 0; i < kNumOfElements; i++)
 	{
-		check[i] = test_array[i] - test_sorted_data[i];
+		check[i] = expected_array[i] - actual_array[i];
 		check_sum = check_sum + check[i];
 	}
 
@@ -139,65 +140,65 @@ void CheckSort(int *test_array, int *test_sorted_data, const int kNumOfElements)
 
 void TestRanomdArray(const int kNumOfElements)
 {
-	int *actual_array = new int[kNumOfElements];
 	int *expected_array = new int[kNumOfElements];
+	int *actual_array  = new int[kNumOfElements];
 
 	std::srand(time(0));
 	for (int i = 0; i < kNumOfElements; i++)
 	{
-		actual_array[i] = std::rand() % 1000;
+		expected_array[i] = std::rand() % 1000;
 	}
 
-	std::copy(actual_array, actual_array + kNumOfElements, expected_array);
-	std::sort(actual_array, actual_array + kNumOfElements);
+	std::copy(expected_array, expected_array + kNumOfElements, actual_array);
+	std::sort(expected_array, expected_array + kNumOfElements);
 
-	SelectionSort(expected_array);
+	SelectionSort(actual_array);
 	std::cout << "Check number one: comparing selection sorting with standard sorting. \n";
-	CheckSort(actual_array, expected_array);
+	CheckSort(expected_array, actual_array);
 
 	delete[] actual_array, expected_array;
 }
 
 void TestSortedArray(const int kNumOfElements)
 {
-	int *actual_array = new int[kNumOfElements];
 	int *expected_array = new int[kNumOfElements];
+	int *actual_array  = new int[kNumOfElements];
 
 	for (int i = 0; i < kNumOfElements; i++)
 	{
-		actual_array[i] = i;
+		expected_array[i] = i;
 	}
-	std::copy(actual_array, actual_array + kNumOfElements, expected_array);
+	std::copy(expected_array, expected_array + kNumOfElements, actual_array);
 
-	SelectionSort(expected_array);
+	SelectionSort(actual_array);
 	std::cout << "Check number two: comparing selection sorting with sorted array. \n";
-	CheckSort(actual_array, expected_array);
+	CheckSort(expected_array, actual_array);
 
 	delete[] actual_array, expected_array;
 }
 
 void TestOneMinusOneArray(const int kNumOfElements)
 {
-	int *actual_array = new int[kNumOfElements];
 	int *expected_array = new int[kNumOfElements];
+	int *actual_array  = new int[kNumOfElements];
 
 	std::srand(time(0));
 	for (int i = 0; i < kNumOfElements; i++)
 	{
-		actual_array[i] = std::rand() % 2;
+		expected_array[i] = std::rand() % 2;
 
-		if (actual_array[i] == 0)
+		if (expected_array[i] == 0)
 		{
-			actual_array[i] = -1;
+			expected_array[i] = -1;
 		}
 	}
 
-	std::copy(actual_array, actual_array + kNumOfElements, expected_array);
-	std::sort(actual_array, actual_array + kNumOfElements);
-	SelectionSort(expected_array);
+	std::copy(expected_array, expected_array + kNumOfElements, actual_array);
+	std::sort(expected_array, expected_array + kNumOfElements);
+	SelectionSort(actual_array);
 
 	std::cout << "Check number three: comparing selection sorting with array of 1 and -1. \n";
-	CheckSort(actual_array, expected_array);
+	CheckSort(expected_array, actual_array);
 
 	delete[] actual_array, expected_array;
 }
@@ -218,18 +219,19 @@ void TestEmptyArray()
 
 void TestReverseOrderSortedArray(const int kNumOfElements)
 {
-	int *actual_array = new int[kNumOfElements];
 	int *expected_array = new int[kNumOfElements];
+	int *actual_array  = new int[kNumOfElements];
 
 	for (int i = 0; i < kNumOfElements; i++)
 	{
-		actual_array[i] = (kNumOfElements - 1) - i;
+		expected_array[i] = (kNumOfElements - 1) - i;
 	}
 
-	std::copy(actual_array, actual_array + kNumOfElements, expected_array);
-	SelectionSort(expected_array);
+	std::copy(expected_array, expected_array + kNumOfElements, actual_array);
+	std::sort(expected_array, expected_array + kNumOfElements);
+	SelectionSort(actual_array);
 	std::cout << "Check number five: comparing selection sorting with array that sorted in reverse order. \n";
-	CheckSort(actual_array, expected_array);
+	CheckSort(expected_array, actual_array);
 
 	delete[] actual_array, expected_array;
 }
